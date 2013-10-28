@@ -13,8 +13,8 @@ cc License along with this program;
 cc if not, see <http://www.gnu.org/licenses/>.
 ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-c    $Date: 2012-03-31 11:17:40 -0400 (Sat, 31 Mar 2012) $
-c    $Revision: 2875 $
+c    $Date: 2012-05-24 11:53:39 -0400 (Thu, 24 May 2012) $
+c    $Revision: 2965 $
 c       
 c
 c
@@ -263,9 +263,6 @@ c     FMM calculation subroutine for Stokes N-body problem
 c
 c     4 Laplace FMM calls
 c
-c     3 Laplace FMM calls for rotlet
-c     7 Laplace FMM calls for doublet
-c
 c
 c     INPUT:
 c
@@ -327,7 +324,6 @@ c
         if( ifgrad .eq. 1 ) then
         do i=1,3
         do j=1,3
-        grad(i,j,k)=0.0d0
         hessmatr(i,j,k) = 0.0d0
         enddo
         enddo
@@ -348,7 +344,6 @@ c
         if( ifgradtarg .eq. 1 ) then
         do i=1,3
         do j=1,3
-        gradtarg(i,j,k) = 0.0d0
         hessmatrtarg(i,j,k) = 0.0d0
         enddo
         enddo
@@ -398,8 +393,7 @@ c
             charge(k) = sigma_sl(j,k)/2
             ifcharge=1
             endif
-            if( ifdouble .eq. 1 .or. ifdouble .eq. 2 
-     $         .or. ifdouble .eq. 4) then
+            if( ifdouble .eq. 1 .or. ifdouble .eq. 2 ) then
             dipstr(k) = 1
             dipvec(1,k) = sigma_dv(1,k)*sigma_dl(j,k)
             dipvec(2,k) = sigma_dv(2,k)*sigma_dl(j,k)
@@ -410,6 +404,26 @@ c
             dipvec(1,k) = dipvec(1,k)/2
             dipvec(2,k) = dipvec(2,k)/2
             dipvec(3,k) = dipvec(3,k)/2
+            ifdipole=1
+            endif
+            if( ifdouble .eq. 3 ) then
+            dipstr(k) = 1
+            dipvec(1,k) = sigma_dv(1,k)*sigma_dl(j,k)
+            dipvec(2,k) = sigma_dv(2,k)*sigma_dl(j,k)
+            dipvec(3,k) = sigma_dv(3,k)*sigma_dl(j,k)
+            dipvec(1,k) = dipvec(1,k)-sigma_dl(1,k)*sigma_dv(j,k)
+            dipvec(2,k) = dipvec(2,k)-sigma_dl(2,k)*sigma_dv(j,k)
+            dipvec(3,k) = dipvec(3,k)-sigma_dl(3,k)*sigma_dv(j,k)
+            dipvec(1,k) = dipvec(1,k)/2
+            dipvec(2,k) = dipvec(2,k)/2
+            dipvec(3,k) = dipvec(3,k)/2
+            ifdipole=1
+            endif
+            if( ifdouble .eq. 4 ) then
+            dipstr(k) = 1
+            dipvec(1,k) = sigma_dv(1,k)*sigma_dl(j,k)
+            dipvec(2,k) = sigma_dv(2,k)*sigma_dl(j,k)
+            dipvec(3,k) = sigma_dv(3,k)*sigma_dl(j,k)
             ifdipole=1
             endif
         enddo
@@ -462,8 +476,7 @@ c
      2         sigma_dl(3,k)*sigma_dv(3,k))
           ifcharge = 1
           endif
-          if( ifdouble .eq. 1 .or. ifdouble .eq. 2 
-     $       .or. ifdouble .eq. 4 ) then
+          if( ifdouble .eq. 1 .or. ifdouble .eq. 2 ) then
           dipstr(k) = 1
           dipvec(1,k) = sigma_dv(1,k)*
      $        (sigma_dl(1,k)*source(1,k) + 
@@ -494,6 +507,53 @@ c
           dipvec(3,k) = dipvec(3,k)/2
           ifdipole = 1
           endif
+          if( ifdouble .eq. 3 ) then
+          dipstr(k) = 1
+          dipvec(1,k) = sigma_dv(1,k)*
+     $        (sigma_dl(1,k)*source(1,k) + 
+     1         sigma_dl(2,k)*source(2,k) + 
+     2         sigma_dl(3,k)*source(3,k) )
+          dipvec(2,k) = sigma_dv(2,k)*
+     $        (sigma_dl(1,k)*source(1,k) + 
+     1         sigma_dl(2,k)*source(2,k) + 
+     2         sigma_dl(3,k)*source(3,k) )
+          dipvec(3,k) = sigma_dv(3,k)*
+     $        (sigma_dl(1,k)*source(1,k) + 
+     1         sigma_dl(2,k)*source(2,k) + 
+     2         sigma_dl(3,k)*source(3,k) )
+          dipvec(1,k) = dipvec(1,k) - sigma_dl(1,k)*
+     $        (sigma_dv(1,k)*source(1,k) + 
+     1         sigma_dv(2,k)*source(2,k) + 
+     2         sigma_dv(3,k)*source(3,k))
+          dipvec(2,k) = dipvec(2,k) - sigma_dl(2,k)*
+     $        (sigma_dv(1,k)*source(1,k) + 
+     1         sigma_dv(2,k)*source(2,k) + 
+     2         sigma_dv(3,k)*source(3,k))
+          dipvec(3,k) = dipvec(3,k) - sigma_dl(3,k)*
+     $        (sigma_dv(1,k)*source(1,k) + 
+     1         sigma_dv(2,k)*source(2,k) + 
+     2         sigma_dv(3,k)*source(3,k))
+          dipvec(1,k) = dipvec(1,k)/2
+          dipvec(2,k) = dipvec(2,k)/2
+          dipvec(3,k) = dipvec(3,k)/2
+          ifdipole = 1
+          endif
+          if( ifdouble .eq. 4 ) then
+          dipstr(k) = 1
+          dipvec(1,k) = sigma_dv(1,k)*
+     $        (sigma_dl(1,k)*source(1,k) + 
+     1         sigma_dl(2,k)*source(2,k) + 
+     2         sigma_dl(3,k)*source(3,k) )
+          dipvec(2,k) = sigma_dv(2,k)*
+     $        (sigma_dl(1,k)*source(1,k) + 
+     1         sigma_dl(2,k)*source(2,k) + 
+     2         sigma_dl(3,k)*source(3,k) )
+          dipvec(3,k) = sigma_dv(3,k)*
+     $        (sigma_dl(1,k)*source(1,k) + 
+     1         sigma_dl(2,k)*source(2,k) + 
+     2         sigma_dl(3,k)*source(3,k) )
+          ifdipole = 1
+          endif
         enddo
 
         if( ifcharge .ne. 0 .or. ifdipole .ne. 0 ) then
@@ -509,61 +569,6 @@ c
      $     ifpot,pot,ifgrad,grad)
         call stfmm3dlap2(ntargs,cpottarg,cfldtarg,chesstarg,
      $     ifpottarg,pottarg,ifgradtarg,gradtarg)
-
-        endif
-
-
-        if( ifdouble .eq. 3 .or. ifdouble .eq. 4 ) then
-c
-c       ... rotlet part
-c
-c       Combine dipoles linearly. It is possible to do so, since both
-c       dipstr and dipvec are real numbers in this calculation (in
-c       general case, one would have to introduce complex dipvec
-c       vectors, and rewrite the underlying FMM). 
-c        
-        do j = 1,3
-c
-        ifcharge=0
-        ifdipole=0
-c        
-        do k = 1,nparts
-          charge(k) = 0
-          dipstr(k) = 0
-          dipvec(1,k) = 0
-          dipvec(2,k) = 0
-          dipvec(3,k) = 0
-          if( ifdouble .eq. 3 .or. ifdouble .eq. 4 ) then
-          dipstr(k) = 1
-          dipvec(1,k) = sigma_dv(1,k)*sigma_dl(j,k)
-          dipvec(2,k) = sigma_dv(2,k)*sigma_dl(j,k)
-          dipvec(3,k) = sigma_dv(3,k)*sigma_dl(j,k)
-          dipvec(1,k) = dipvec(1,k)-sigma_dl(1,k)*sigma_dv(j,k)
-          dipvec(2,k) = dipvec(2,k)-sigma_dl(2,k)*sigma_dv(j,k)
-          dipvec(3,k) = dipvec(3,k)-sigma_dl(3,k)*sigma_dv(j,k)
-          ifdipole = 1
-          endif
-        enddo
-
-        if( ifcharge .ne. 0 .or. ifdipole .ne. 0 ) then
-
-        ifhess0=0
-        ifhesstarg0=0
-        call lfmm3dparthesstftarg(ier,iprec,
-     $     nparts,source,
-     $     ifcharge,charge,ifdipole,dipstr,dipvec,
-     $     ifpot0,cpot,iffld0,cfld,ifhess0,chess,
-     $     ntargs,target,ifpottarg0,cpottarg,iffldtarg0,cfldtarg,
-     $     ifhesstarg0,chesstarg)
-
-        call stfmm3dlap3(nparts,j,cpot,cfld,
-     $     ifpot,pot,ifgrad,grad)
-        call stfmm3dlap3(ntargs,j,cpottarg,cfldtarg,
-     $     ifpottarg,pottarg,ifgradtarg,gradtarg)
-
-        endif
-
-        enddo
 
         endif
 
@@ -1669,6 +1674,11 @@ c
 c
         return
         end
+c
+c
+c
+c
+c
 c
 c
 c

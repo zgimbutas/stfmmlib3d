@@ -7,6 +7,9 @@ addpath('/home/zng2/todo/fmmlib3d-1.2/matlab');
 nsources = [5000 5000 50000 500000]
 iprecs = [-1 0 1 2]
 
+  rand('seed',0.5)
+  randn('seed',0.5)
+
 for i=1:size(nsources,2)
     
 nsource = nsources(i);
@@ -50,7 +53,7 @@ iprec = iprecs(j);
 
 ifsingle=0;
 sigma_sl = rand(3,nsource);
-ifdouble=1;
+ifdouble=4;
 sigma_dl = rand(3,nsource);
 sigma_dv = rand(3,nsource);
 

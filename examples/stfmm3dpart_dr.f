@@ -20,7 +20,7 @@ c
 c
 c       Compute potentials by direct calculation and via FMM.
 c
-        parameter(nmax=100000)
+        parameter(nmax=1000000)
 c
         dimension sigma_sl(3,nmax)
         dimension sigma_dl(3,nmax)

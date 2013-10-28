@@ -185,7 +185,7 @@ if( ifsingle == 1 ),
 
 end
 
-if( ifdouble == 1 || ifdouble == 2 || ifdouble == 4 ),
+if( ifdouble == 1 || ifdouble == 2 ),
 
   ifdipole = 1;
   dipstr = ones(1,nsource);
@@ -193,6 +193,27 @@ if( ifdouble == 1 || ifdouble == 2 || ifdouble == 4 ),
   dipvec(2,:) = sigma_dl(j,:).*sigma_dv(2,:) + sigma_dl(2,:).*sigma_dv(j,:);
   dipvec(3,:) = sigma_dl(j,:).*sigma_dv(3,:) + sigma_dl(3,:).*sigma_dv(j,:);
   dipvec = dipvec/2;
+
+end
+
+if( ifdouble == 3 ),
+
+  ifdipole = 1;
+  dipstr = ones(1,nsource);
+  dipvec(1,:) = sigma_dl(j,:).*sigma_dv(1,:) - sigma_dl(1,:).*sigma_dv(j,:);
+  dipvec(2,:) = sigma_dl(j,:).*sigma_dv(2,:) - sigma_dl(2,:).*sigma_dv(j,:);
+  dipvec(3,:) = sigma_dl(j,:).*sigma_dv(3,:) - sigma_dl(3,:).*sigma_dv(j,:);
+  dipvec = dipvec/2;
+
+end
+
+if( ifdouble == 4 ),
+
+  ifdipole = 1;
+  dipstr = ones(1,nsource);
+  dipvec(1,:) = sigma_dl(j,:).*sigma_dv(1,:);
+  dipvec(2,:) = sigma_dl(j,:).*sigma_dv(2,:);
+  dipvec(3,:) = sigma_dl(j,:).*sigma_dv(3,:);
 
 end
 
@@ -304,7 +325,7 @@ if( ifdouble == 2 || ifdouble == 4 ),
 
 end
 
-if( ifdouble == 1 || ifdouble == 2 || ifdouble == 4 ),
+if( ifdouble == 1 || ifdouble == 2 ),
 
   ifdipole = 1;
   dipstr = ones(1,nsource);
@@ -318,6 +339,36 @@ if( ifdouble == 1 || ifdouble == 2 || ifdouble == 4 ),
   dipvec(2,:) = sigma_dv(2,:).*ul + sigma_dl(2,:).*uv;
   dipvec(3,:) = sigma_dv(3,:).*ul + sigma_dl(3,:).*uv;
   dipvec = dipvec/2;
+
+end
+
+if( ifdouble == 3 ),
+
+  ifdipole = 1;
+  dipstr = ones(1,nsource);
+  ul = (sigma_dl(1,:).*source(1,:) + ...
+        sigma_dl(2,:).*source(2,:) + ...
+        sigma_dl(3,:).*source(3,:));
+  uv = (sigma_dv(1,:).*source(1,:) + ...
+        sigma_dv(2,:).*source(2,:) + ...
+        sigma_dv(3,:).*source(3,:));
+  dipvec(1,:) = sigma_dv(1,:).*ul - sigma_dl(1,:).*uv;
+  dipvec(2,:) = sigma_dv(2,:).*ul - sigma_dl(2,:).*uv;
+  dipvec(3,:) = sigma_dv(3,:).*ul - sigma_dl(3,:).*uv;
+  dipvec = dipvec/2;
+
+end
+
+if( ifdouble == 4 ),
+
+  ifdipole = 1;
+  dipstr = ones(1,nsource);
+  ul = (sigma_dl(1,:).*source(1,:) + ...
+        sigma_dl(2,:).*source(2,:) + ...
+        sigma_dl(3,:).*source(3,:));
+  dipvec(1,:) = sigma_dv(1,:).*ul;
+  dipvec(2,:) = sigma_dv(2,:).*ul;
+  dipvec(3,:) = sigma_dv(3,:).*ul;
 
 end
 
@@ -377,70 +428,6 @@ F.gradtarg(3,1,:) = H.hesstarg(5,:);
 F.gradtarg(3,2,:) = H.hesstarg(6,:);
 
 gradtarg = gradtarg + F.gradtarg;
-
-end
-
-
-
-if( ifdouble == 3 || ifdouble == 4 ),
-
-for j = 1:3,
-
-ifcharge = 0;
-ifdipole = 0;
-
-ifcharge = 0;
-charge = zeros(1,nsource);
-
-ifdipole = 0;
-dipstr = zeros(1,nsource);
-dipvec = zeros(3,nsource);
-
-ifquad  = 0;
-quadstr = zeros(1,nsource);
-quadvec = zeros(6,nsource);
-
-ifdipole = 1;
-dipstr = ones(1,nsource);
-dipvec(1,:) = sigma_dv(1,:).*sigma_dl(j,:) - sigma_dl(1,:).*sigma_dv(j,:);
-dipvec(2,:) = sigma_dv(2,:).*sigma_dl(j,:) - sigma_dl(2,:).*sigma_dv(j,:);
-dipvec(3,:) = sigma_dv(3,:).*sigma_dl(j,:) - sigma_dl(3,:).*sigma_dv(j,:);
-
-if( if_use_fmm == 1 ),
-H=lfmm3dpartquad(iprec,nsource,source,ifcharge,charge,...
-        ifdipole,dipstr,dipvec,ifquad,quadstr,quadvec,ifpot0,iffld0,ifhess0,...
-        ntarget,target,ifpottarg0,iffldtarg0,ifhesstarg0);
-else
-H=l3dpartquaddirect(nsource,source,ifcharge,charge,...
-        ifdipole,dipstr,dipvec,ifquad,quadstr,quadvec,ifpot0,iffld0,ifhess0,...
-        ntarget,target,ifpottarg0,iffldtarg0,ifhesstarg0);
-end
-if( ifpot0 == 1 ), H.pot = real(H.pot); end;
-if( iffld0 == 1 ), H.fld = real(H.fld); end;
-if( ifhess0 == 1 ), H.hess = real(H.hess); end;
-if( ifpottarg0 == 1 ), H.pottarg = real(H.pottarg); end;
-if( iffldtarg0 == 1 ), H.fldtarg = real(H.fldtarg); end;
-if( ifhesstarg0 == 1 ), H.hesstarg = real(H.hesstarg); end;
-
-
-if( ifpot == 1 ),
-   pot(j,:) = pot(j,:) + H.pot;
-end
-
-if( ifgrad == 1 ),
-   grad(j,1:3,:) = reshape(grad(j,1:3,:),3,nsource) - H.fld;
-end
-
-if( ifpottarg == 1 ),
-   pottarg(j,:) = pottarg(j,:) + H.pottarg;
-end
-
-if( ifgradtarg == 1 ),
-   gradtarg(j,1:3,:) = reshape(gradtarg(j,1:3,:),3,ntarget) - H.fldtarg;
-end
-
-
-end
 
 end
 
