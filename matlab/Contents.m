@@ -5,6 +5,9 @@
 %   sthfmm3dpart - Stokes half-space particle FMM in R^3.
 %   lfmm3dpartquad - Laplace particle FMM in R^3.
 %
+% Triangle FMM routines (constant densities on flat triangles).
+%   stfmm3dtria - Stokes triangle FMM in R^3.
+%
 % Direct evaluation routines.
 %   st3dpartdirect - Stokes particle interactions in R^3.
 %   sth3dpartdirect - Stokes half-space particle interactions in R^3.
@@ -16,6 +19,16 @@
 %   st3traction - Evaluate traction vector from p, \grad u, and n.
 %   st3stress2traction - Evaluate traction vector from stress tensor and n.
 %
+% Direct evaluation routines (constant densities on flat triangles).
+%   st3dtriadirect  - Stokes triangle interactions in R^3.
+%
+% Triangulations.
+%   atriread - Retrieve Cart3d triangulation from a file. (flat)
+%   atriwrite - Store Cart3d triangulation to a file. (flat)
+%   atriproc - Process triangulations in Cart3d format. (flat)
+%   atrirefine - Refine Cart3d triangulation. (flat)
+%   atriplot - Plot Cart3d triangulation. (flat)
+%
 % Internal utility functions.
 %   stfmm3dprini   - Initialize internal printing routines.
 %
@@ -23,6 +36,8 @@
 %
 %   test_st3dpart_direct - test Stokes particle FMM vs direct routines.
 %   test_sth3dpart_direct - test Stokes half-space particle FMM.
+%   test_st3dtria_direct - test Stokes triangle FMM vs direct routines.
+%
 %   test_sth3dpart_direct2 - test Fortran MEX vs Matlab routines.
 %                            Half space Stokes particle interactions. 
 %   test_sth3dpart_direct3 - test Fortran MEX vs Matlab routines. 

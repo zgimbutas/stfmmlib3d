@@ -5,6 +5,9 @@ Date: May 30, 2012
 Version 1.2 - First external release.
 =====================================
 
+Version 1.2.1 - Add triangle FMM routines.
+==========================================
+
 
 %% Copyright (C) 2010-2012: Leslie Greengard and Zydrunas Gimbutas
 %% Contact: greengard@cims.nyu.edu
@@ -44,12 +47,22 @@ sthfmm3dparttarg - Stokes half-space particle target FMM in R^3.
 lfmm3dpartquadtarg - Supplementary Laplace particle target FMM in R^3.
 
 
+Triangle FMM routines (constant densities on flat triangles).
+
+stfmm3dtriaself - Stokes triangle FMM in R^3.
+stfmm3dtriatarg - Stokes triangle target FMM in R^3.
+
 
 Direct evaluation routines.
 
 st3dpartdirect - Stokes particle interactions in R^3.
 sth3dpartdirect - Stokes half-space particle interactions in R^3.
 l3dpartquaddirect - Supplementary Laplace particle interactions in R^3.
+
+
+Direct evaluation routines (constant densities on flat triangles).
+
+st3dtriadirect - Stokes triangle interactions in R^3.
 
 
 
@@ -61,10 +74,16 @@ Matlab
 %   sthfmm3dpart - Stokes half-space particle FMM in R^3.
 %   lfmm3dpartquad - Supplementary Laplace particle FMM in R^3.
 %
+% Direct evaluation routines (constant densities on flat triangles).
+%   stfmm3dpart - Stokes triangle FMM in R^3.
+%
 % Direct evaluation routines.
 %   st3dpartdirect - Stokes particle interactions in R^3.
 %   sth3dpartdirect - Stokes half-space particle interactions in R^3.
 %   l3dpartquaddirect - Supplementary Laplace particle interactions in R^3.
+%
+% Direct evaluation routines (constant densities on flat triangles).
+%   st3dtriadirect - Stokes triangle interactions in R^3.
 %
 % Field postprocessing routines.
 %   st3stress - Evaluate stress tensor from p and \grad u.

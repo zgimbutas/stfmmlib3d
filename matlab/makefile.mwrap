@@ -4,7 +4,7 @@
 #  gfortran > 4.4.0 is strongly recommended
 #
 
-PROJECT = stfmm3d_r2012a
+PROJECT = stfmm3d_r2012b
 MEX_GATEWAY = $(PROJECT)
 
 
@@ -33,18 +33,22 @@ include mwrap.inc
 
 # SOURCE FILE LIST
 #
-vpath %.f .:../src
+vpath %.f .:..:../src
 
 
 FSRCS = \
-     stfmm3dpart.f sthfmm3dpart.f \
+     stfmm3dpart.f stfmm3dtria.f sthfmm3dpart.f \
      st3green.f st3routs.f \
      lfmm3dparthess_tf.f lfmm3dparthess.f \
+     lfmm3dtrilhess_tf.f lfmm3dtrilhess.f \
      lfmm3drouts.f \
      d3tstrcr.f d3mtreeplot.f  \
      prini.f l3dterms.f laprouts3d.f l3dtrans.f \
      prinm.f yrecursion.f \
      legeexps.f rotviarecur3.f \
+     hkrand.f dlaran.f \
+     triahquad.f triagauc.f triasymq.f l3dtrirouts.f \
+     triquadflatlib.f trilib.f \
      lfmm3dpartquad.f 
 
 

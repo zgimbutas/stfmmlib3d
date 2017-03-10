@@ -44,7 +44,7 @@ MEX_CC=   $(CXX)
 MW=mwrap
 MWFLAGS=-c99complex -mex	
 ###MEX_LIBS=-lm
-MEX_LIBS=-Wl,--no-undefined -lm -ldl
+MEX_LIBS=-Wl,--no-undefined -lgfortran -lm -ldl
 MEX_LINK=
 
 MEX_FLAGS=
@@ -69,7 +69,7 @@ MEX_CC=   $(CXX)
 MW=mwrap
 MWFLAGS=-c99complex -mex	
 ###MEX_LIBS=-lgomp -lm
-MEX_LIBS=-Wl,--no-undefined -lgomp -lm -ldl
+MEX_LIBS=-Wl,--no-undefined -lgfortran -lgomp -lm -ldl
 MEX_LINK=
 
 MEX_FLAGS=
