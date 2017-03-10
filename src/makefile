@@ -177,6 +177,9 @@ FSRCS += stfmm3dpart.f sthfmm3dpart.f \
 
 FSRCS += sthfmm3dpart.f
 
+FSRCS += stfmm3dtria.f l3dtrirouts.f lfmm3dtrilhess.f lfmm3dtrilhess_tf.f \
+         triagauc.f triahquad.f triasymq.f trilib.f triquadflatlib.f
+
 FSRCS += prini.f 
 
 
