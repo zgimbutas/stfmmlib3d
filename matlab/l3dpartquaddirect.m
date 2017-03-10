@@ -146,7 +146,7 @@ if( ifhesstarg == 1 ), hesstarg=zeros(6,ntarget)+1i*zeros(6,ntarget); end;
 ier=0;
 
 mex_id_ = 'l3dpartquaddirect(i int[x], i double[xx], i int[x], i dcomplex[], i int[x], i dcomplex[], i double[xx], i int[x], i dcomplex[], i double[xx], i int[x], io dcomplex[], i int[x], io dcomplex[], i int[x], io dcomplex[], i int[x], i double[], i int[x], io dcomplex[], i int[x], io dcomplex[], i int[x], io dcomplex[])';
-[pot, fld, hess, pottarg, fldtarg, hesstarg] = stfmm3d_r2012a(mex_id_, nsource, source, ifcharge, charge, ifdipole, dipstr, dipvec, ifquad, quadstr, quadvec, ifpot, pot, iffld, fld, ifhess, hess, ntarget, target, ifpottarg, pottarg, iffldtarg, fldtarg, ifhesstarg, hesstarg, 1, 3, nsource, 1, 1, 3, nsource, 1, 6, nsource, 1, 1, 1, 1, 1, 1, 1);
+[pot, fld, hess, pottarg, fldtarg, hesstarg] = stfmm3d_r2012b(mex_id_, nsource, source, ifcharge, charge, ifdipole, dipstr, dipvec, ifquad, quadstr, quadvec, ifpot, pot, iffld, fld, ifhess, hess, ntarget, target, ifpottarg, pottarg, iffldtarg, fldtarg, ifhesstarg, hesstarg, 1, 3, nsource, 1, 1, 3, nsource, 1, 6, nsource, 1, 1, 1, 1, 1, 1, 1);
 
 
 if( ifpot == 1 ), U.pot=pot; end
@@ -156,6 +156,5 @@ if( ifpottarg == 1 ), U.pottarg=pottarg; end
 if( iffldtarg == 1 ), U.fldtarg=fldtarg; end
 if( ifhesstarg == 1 ), U.hesstarg=hesstarg; end
 U.ier=ier;
-
 
 

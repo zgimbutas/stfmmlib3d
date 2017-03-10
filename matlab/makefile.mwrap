@@ -46,7 +46,6 @@ FSRCS = \
      prini.f l3dterms.f laprouts3d.f l3dtrans.f \
      prinm.f yrecursion.f \
      legeexps.f rotviarecur3.f \
-     hkrand.f dlaran.f \
      triahquad.f triagauc.f triasymq.f l3dtrirouts.f \
      triquadflatlib.f trilib.f \
      lfmm3dpartquad.f 

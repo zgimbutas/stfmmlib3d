@@ -121,14 +121,14 @@ if( nargin == 9 )
   ifpot = 1;
   ifgrad = 1;
   ntarget = 0;
-  target = zeros(3,ntarget);
+  target = zeros(3,1);
   ifpottarg = 0;
   ifgradtarg = 0;
 end
 
 if( nargin == 11 ) 
   ntarget = 0;
-  target = zeros(3,ntarget);
+  target = zeros(3,1);
   ifpottarg = 0;
   ifgradtarg = 0;
 end
@@ -158,10 +158,10 @@ ier=0;
 
 if( ntarget == 0 ) 
 mex_id_ = 'sthfmm3dpartself(io int[x], i int[x], i int[x], i int[x], i double[xx], i int[x], i double[], i int[x], i double[], i double[xx], i int[x], io double[], io double[], i int[x], io double[])';
-[ier, pot, pre, grad] = stfmm3d_r2012a(mex_id_, ier, iprec, itype, nsource, source, ifsingle, sigma_sl, ifdouble, sigma_dl, sigma_dv, ifpot, pot, pre, ifgrad, grad, 1, 1, 1, 1, 3, nsource, 1, 1, 3, nsource, 1, 1);
+[ier, pot, pre, grad] = stfmm3d_r2012b(mex_id_, ier, iprec, itype, nsource, source, ifsingle, sigma_sl, ifdouble, sigma_dl, sigma_dv, ifpot, pot, pre, ifgrad, grad, 1, 1, 1, 1, 3, nsource, 1, 1, 3, nsource, 1, 1);
 else
 mex_id_ = 'sthfmm3dparttarg(io int[x], i int[x], i int[x], i int[x], i double[xx], i int[x], i double[], i int[x], i double[], i double[xx], i int[x], io double[], io double[], i int[x], io double[], i int[x], i double[], i int[x], io double[], io double[], i int[x], io double[])';
-[ier, pot, pre, grad, pottarg, pretarg, gradtarg] = stfmm3d_r2012a(mex_id_, ier, iprec, itype, nsource, source, ifsingle, sigma_sl, ifdouble, sigma_dl, sigma_dv, ifpot, pot, pre, ifgrad, grad, ntarget, target, ifpottarg, pottarg, pretarg, ifgradtarg, gradtarg, 1, 1, 1, 1, 3, nsource, 1, 1, 3, nsource, 1, 1, 1, 1, 1);
+[ier, pot, pre, grad, pottarg, pretarg, gradtarg] = stfmm3d_r2012b(mex_id_, ier, iprec, itype, nsource, source, ifsingle, sigma_sl, ifdouble, sigma_dl, sigma_dv, ifpot, pot, pre, ifgrad, grad, ntarget, target, ifpottarg, pottarg, pretarg, ifgradtarg, gradtarg, 1, 1, 1, 1, 3, nsource, 1, 1, 3, nsource, 1, 1, 1, 1, 1);
 end
 
 if( ifpot == 1 ), U.pot=pot; end

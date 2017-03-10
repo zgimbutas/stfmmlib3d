@@ -1,8 +1,6 @@
 #
 #  Generate Matlab/Octave MEX files
 #
-#  gfortran > 4.4.0 is strongly recommended
-#
 
 
 ###TARGET=octave-linux
@@ -26,6 +24,10 @@
 ###TARGET=matlab-windows-w32-openmp
 ###TARGET=matlab-windows-w64
 ###TARGET=matlab-windows-w64-openmp
+
+
+
+##############################################################################
 
 
 
@@ -77,6 +79,11 @@ OBJSUF=o
 MODSUF=mod
 
 endif
+
+
+
+##############################################################################
+
 
 
 ifeq ($(TARGET), octave-linux-intel)
@@ -132,6 +139,10 @@ endif
 
 
 
+##############################################################################
+
+
+
 ifeq ($(TARGET), matlab-linux-a64-intel)
 
 FFLAGS=-g -xT -O3 -ip -fPIC
@@ -152,7 +163,7 @@ MEX_CC=   $(CXX)
 MW=mwrap
 MWFLAGS=-c99complex -mex	
 MEX_LIBS=-Wl,--rpath,$(intel_libs) -L$(intel_libs)  -lifcore -lsvml -limf -lintlc -lm
-MEX_LINK=-o $(MEX_GATEWAY).mexa64
+###MEX_LINK=-o $(MEX_GATEWAY).mexa64
 
 MEX_FLAGS=
 OBJSUF=o
@@ -182,13 +193,17 @@ MEX_CC=   $(CXX)
 MW=mwrap
 MWFLAGS=-c99complex -mex	
 MEX_LIBS=-Wl,--rpath,$(intel_libs) -L$(intel_libs) -lifcoremt -lsvml -limf -liomp5 -lintlc -lm
-MEX_LINK=-o $(MEX_GATEWAY).mexa64
+###MEX_LINK=-o $(MEX_GATEWAY).mexa64
 
 MEX_FLAGS=
 OBJSUF=o
 MODSUF=mod
 
 endif
+
+
+
+##############################################################################
 
 
 
@@ -304,6 +319,11 @@ MODSUF=mod
 endif
 
 
+
+##############################################################################
+
+
+
 ifeq ($(TARGET), matlab-linux-a64)
 
 FFLAGS=-g -O2 -fPIC
@@ -352,13 +372,17 @@ MEX_CC=   $(CXX)
 MW=mwrap
 MWFLAGS=-c99complex -mex	
 MEX_LIBS=-lgomp -lgfortran -lm
-MEX_LINK=-o $(MEX_GATEWAY).mexa64
+###MEX_LINK=-o $(MEX_GATEWAY).mexa64
 
 MEX_FLAGS=
 OBJSUF=o
 MODSUF=mod
 
 endif
+
+
+
+##############################################################################
 
 
 
@@ -407,7 +431,7 @@ MEX_CC=   $(CXX)
 MW=mwrap
 MWFLAGS=-c99complex -mex
 MEX_LIBS=$(CROSS_LIBS) --openmp -lgomp -lpthread -Wl,--no-undefined 
-MEX_LINK=-o $(MEX_GATEWAY).mexw32
+###MEX_LINK=-o $(MEX_GATEWAY).mexw32
 
 MEX_FLAGS=
 OBJSUF=o
@@ -461,7 +485,7 @@ MEX_CC=   $(CXX)
 MW=mwrap
 MWFLAGS=-c99complex -mex
 MEX_LIBS=$(CROSS_LIBS) --openmp -lgomp -lpthread -Wl,--no-undefined 
-MEX_LINK=-o $(MEX_GATEWAY).mexw64
+###MEX_LINK=-o $(MEX_GATEWAY).mexw64
 
 MEX_FLAGS=
 OBJSUF=o

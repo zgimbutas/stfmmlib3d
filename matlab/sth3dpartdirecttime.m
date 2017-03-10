@@ -142,7 +142,7 @@ ier=0;
 
 
 mex_id_ = 'sth3dpartdirecttime(i int[x], i int[x], i int[x], i double[xx], i int[x], i double[], i int[x], i double[], i double[xx], i int[x], io double[], io double[], i int[x], io double[], i int[x], i double[], i int[x], io double[], io double[], i int[x], io double[])';
-[pot, pre, grad, pottarg, pretarg, gradtarg] = stfmm3d_r2012a(mex_id_, itype, ms, nsource, source, ifsingle, sigma_sl, ifdouble, sigma_dl, sigma_dv, ifpot, pot, pre, ifgrad, grad, ntarget, target, ifpottarg, pottarg, pretarg, ifgradtarg, gradtarg, 1, 1, 1, 3, nsource, 1, 1, 3, nsource, 1, 1, 1, 1, 1);
+[pot, pre, grad, pottarg, pretarg, gradtarg] = stfmm3d_r2012b(mex_id_, itype, ms, nsource, source, ifsingle, sigma_sl, ifdouble, sigma_dl, sigma_dv, ifpot, pot, pre, ifgrad, grad, ntarget, target, ifpottarg, pottarg, pretarg, ifgradtarg, gradtarg, 1, 1, 1, 3, nsource, 1, 1, 3, nsource, 1, 1, 1, 1, 1);
 
 
 if( ifpot == 1 ), U.pot=pot; end

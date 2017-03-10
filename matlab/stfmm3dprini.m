@@ -9,8 +9,7 @@ unit2=0;
 end
 
 mex_id_ = 'prini(i int[x], i int[x])';
-stfmm3d_r2012a(mex_id_, unit1, unit2, 1, 1);
-
+stfmm3d_r2012b(mex_id_, unit1, unit2, 1, 1);
 
 
 

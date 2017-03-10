@@ -22,6 +22,13 @@
 % Direct evaluation routines (constant densities on flat triangles).
 %   st3dtriadirect  - Stokes triangle interactions in R^3.
 %
+% Layer evaluation tools (for exterior boundary value problems).
+%
+%   st3dmultfmmflat_dir - Dirichlet solver matmul, representation S_0 + D_0
+%   st3dmultfmmflat_dir_s0 - Dirichlet solver matmul, representation S_0
+%   st3dmultfmmflat_neu - Neumann solver matmul, representation S_0 + D_0 S_0
+%   st3dmultfmmflat_neu_s0 - Neumann solver matmul, representation S_0
+%
 % Triangulations.
 %   atriread - Retrieve Cart3d triangulation from a file. (flat)
 %   atriwrite - Store Cart3d triangulation to a file. (flat)
@@ -29,6 +36,10 @@
 %   atrirefine - Refine Cart3d triangulation. (flat)
 %   atriplot - Plot Cart3d triangulation. (flat)
 %
+%   qtriread - Retrieve Cart3d triangulation from a file. (quadratic)
+%   qtriwrite - Store Cart3d triangulation to a file. (quadratic)
+%   qtriproc - Process triangulations in Cart3d format. (quadratic)
+c
 % Internal utility functions.
 %   stfmm3dprini   - Initialize internal printing routines.
 %
@@ -43,7 +54,11 @@
 %   test_sth3dpart_direct3 - test Fortran MEX vs Matlab routines. 
 %                            Half space Stokes particle FMM.
 %
-
+%   demo_st3d_extdir - Exterior Dirichlet solver, representation S_0 + D_0
+%   demo_st3d_extdir_s0 - Exterior Dirichlet solver, representation S_0
+%   demo_st3d_extneu - Exterior Neumann solver, representation S_0 + D_0 S_0
+%   demo_st3d_extneu_s0 - Exterior Neumann solver, representation S_0
+%
 
 %% Copyright (C) 2009-2012: Leslie Greengard and Zydrunas Gimbutas
 %% Contact: greengard@cims.nyu.edu

@@ -189,6 +189,8 @@ end
 disp('')
 'Stokes triangle FMM in R^3'
 
+ifpot = 1
+ifgrad = 1
 ifpottarg = 0
 ifgradtarg = 0
 
@@ -213,12 +215,12 @@ if( ifpot ), F.pot=F.pot/(4*pi); end
 if( ifgrad ), F.grad=F.grad/(4*pi); end
 
 if( ifpot ),
-%rms_pot = norm((F.pot),2)/sqrt(nsource)
+rms_pot = norm((F.pot),2)/sqrt(nsource)
 rms_error_pot = norm((U.pot - F.pot),2)/sqrt(nsource)
 end
 
 if( ifgrad ),
-%rms_grad = norm(reshape(F.grad,9,nsource),2)/sqrt(nsource)
+rms_grad = norm(reshape(F.grad,9,nsource),2)/sqrt(nsource)
 rms_error_grad = norm(reshape(U.grad - F.grad,9,nsource),2)/sqrt(nsource)
 end
 %%%break;
