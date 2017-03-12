@@ -431,7 +431,7 @@ MEX_CC=   $(CXX)
 MW=mwrap
 MWFLAGS=-c99complex -mex
 MEX_LIBS=$(CROSS_LIBS) --openmp -lgomp -lpthread -Wl,--no-undefined 
-###MEX_LINK=-o $(MEX_GATEWAY).mexw32
+MEX_LINK=-o $(MEX_GATEWAY).mexw32
 
 MEX_FLAGS=
 OBJSUF=o
@@ -485,7 +485,7 @@ MEX_CC=   $(CXX)
 MW=mwrap
 MWFLAGS=-c99complex -mex
 MEX_LIBS=$(CROSS_LIBS) --openmp -lgomp -lpthread -Wl,--no-undefined 
-###MEX_LINK=-o $(MEX_GATEWAY).mexw64
+MEX_LINK=-o $(MEX_GATEWAY).mexw64
 
 MEX_FLAGS=
 OBJSUF=o
