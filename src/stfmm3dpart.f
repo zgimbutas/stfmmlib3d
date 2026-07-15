@@ -196,10 +196,6 @@ c
         lchess=2*6*nparts
         lused=lused+lchess
 
-        ihessmatr=lused+1
-        lhessmatr=3*3*nparts
-        lused=lused+lhessmatr
-
         icpottarg=lused+1
         lcpottarg=2*ntargs
         lused=lused+lcpottarg
@@ -211,10 +207,6 @@ c
         ichesstarg=lused+1
         lchesstarg=2*6*ntargs
         lused=lused+lchesstarg
-
-        ihessmatrtarg=lused+1
-        lhessmatrtarg=3*3*ntargs
-        lused=lused+lhessmatrtarg
 c
         allocate(w(lused+10),stat=ier)
         if( ier .ne. 0 ) return
@@ -226,8 +218,8 @@ c
      $     ntargs,target,ifpottarg,pottarg,pretarg,
      $     ifgradtarg,gradtarg,
      $     w(icharge),w(idipstr),w(idipvec),
-     $     w(icpot),w(icfld),w(ichess),w(ihessmatr),
-     $     w(icpottarg),w(icfldtarg),w(ichesstarg),w(ihessmatrtarg))
+     $     w(icpot),w(icfld),w(ichess),
+     $     w(icpottarg),w(icfldtarg),w(ichesstarg))
 c
 c     reconstruct FMM data structure and account for all local
 c     interactions using quadrature routines - no interactions are saved
@@ -256,8 +248,8 @@ c*********************************
      $     ifpot,pot,pre,ifgrad,grad,
      $     ntargs,target,ifpottarg,pottarg,pretarg,
      $     ifgradtarg,gradtarg,
-     $     charge,dipstr,dipvec,cpot,cfld,chess,hessmatr,
-     $     cpottarg,cfldtarg,chesstarg,hessmatrtarg)
+     $     charge,dipstr,dipvec,cpot,cfld,chess,
+     $     cpottarg,cfldtarg,chesstarg)
 c
 c     FMM calculation subroutine for Stokes N-body problem
 c
@@ -303,13 +295,11 @@ c
 c
         complex *16 cpot(1)
         complex *16 cfld(3,1)
-        complex *16 chess(6,1) 
-        real *8 hessmatr(3,3,1)
+        complex *16 chess(6,1)
 
         complex *16 cpottarg(1)
         complex *16 cfldtarg(3,1)
-        complex *16 chesstarg(6,1) 
-        real *8 hessmatrtarg(3,3,1)
+        complex *16 chesstarg(6,1)
 c
 c
         do k=1,nparts
