@@ -49,7 +49,7 @@ else
 x=zeros(n,1);
 r=b;
 end
-er0=norm(r,2)
+er0=norm(r,2);
 
 % Randomize the initial solution vector
 %x=rand(n,1);
@@ -67,10 +67,12 @@ w=A(r);
 % orthogonalize the new direction to the preceding ones
 wp=w;
 rp=r;
+for l=1:1
 for j=1:i-1
   d=Ae(:,j)'*wp;
   wp=wp-d*Ae(:,j);
   rp=rp-d*e(:,j);
+end
 end
 
 % normalize and store the new direction
@@ -79,10 +81,12 @@ Ae(:,i)=d*wp;
 e(:,i)=d*rp;
 
 % reorthogonalize the new direction one more time
+for l=1:1
 for j=1:i-1
   d=Ae(:,j)'*Ae(:,i);
   Ae(:,i)=Ae(:,i)-d*Ae(:,j);
   e(:,i)=e(:,i)-d*e(:,j);
+end
 end
 
 % normalize and store the new direction
@@ -105,8 +109,8 @@ x=x+d*e(:,i);
 
 %%%norm(r,2)
 %%%fprintf('iter: %d, norm(r,2): %f\n',i,norm(r,2));
-fprintf('iter: %d, rms=norm(r,2)/sqrt(n): %17.12f\n',i,norm(r,2)/sqrt(n));
-fprintf('iter: %d, rel=norm(r,2)/norm(b,2): %17.12f\n',i,norm(r,2)/norm(b,2));
+%%%fprintf('iter: %d, rms=norm(r,2)/sqrt(n): %17.12f\n',i,norm(r,2)/sqrt(n));
+fprintf('iter: %d, rel=norm(r,2)/norm(b,2): %17.12e\n',i,norm(r,2)/norm(b,2));
 
 %%%if( i == 1 ), norm1 = norm(r,2); end;
 if( i == 1 ), norm1 = norm(b,2); end;
