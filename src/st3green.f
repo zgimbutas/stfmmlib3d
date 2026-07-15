@@ -429,6 +429,13 @@ c
      $     source,du,rnorm,target,uvec,p,
      $     ifgrad,grad)
         implicit real *8 (a-h,o-z)
+c
+c       Free space Stokes double layer kernel dispatcher:
+c       itype = 1: stresslet (green3stp_stresslet_dlp_eval)
+c       itype = 2: symmetric stresslet (green3stp_stresslet_sym_eval)
+c       itype = 3: rotlet (green3stp_rotlet_eval)
+c       itype = 4: doublet (green3stp_doublet_eval)
+c
         dimension source(3),target(3)
         dimension rnorm(3),du(3),dudx(3,3),grad(3,3)
 

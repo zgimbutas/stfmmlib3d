@@ -1285,7 +1285,7 @@ c
         complex *16 pottarg(1),fldtarg(3,1),hesstarg(6,1)
         complex *16 ptemp,ftemp(3),htemp(6)
 c
-        if( ifpot .eq. 1 .or. iffld .eq. 1 ) then
+        if( ifpot .eq. 1 .or. iffld .eq. 1 .or. ifhess .eq. 1 ) then
 ccC$OMP PARALLEL DO DEFAULT(SHARED)
 ccC$OMP$PRIVATE(i,j,ptemp,ftemp,htemp) 
 ccC$OMP$SCHEDULE(DYNAMIC)
@@ -1354,7 +1354,8 @@ cccC$OMP$NUM_THREADS(4)
 cccC$OMP END PARALLEL DO
         endif
 
-        if( ifpottarg .eq. 1 .or. iffldtarg .eq. 1 ) then
+        if( ifpottarg .eq. 1 .or. iffldtarg .eq. 1
+     $     .or. ifhesstarg .eq. 1 ) then
 cccC$OMP PARALLEL DO DEFAULT(SHARED)
 cccC$OMP$PRIVATE(i,j,ptemp,ftemp,htemp) 
 cccC$OMP$SCHEDULE(DYNAMIC)
@@ -1448,7 +1449,7 @@ c
         complex *16 pottarg(1),fldtarg(3,1),hesstarg(6,1)
         complex *16 ptemp,ftemp(3),htemp(6)
 c
-        if( ifpot .eq. 1 .or. iffld .eq. 1 ) then
+        if( ifpot .eq. 1 .or. iffld .eq. 1 .or. ifhess .eq. 1 ) then
         do j=box1(14),box1(14)+box1(15)-1
         if (ifcharge .eq. 1 ) then
         call lpotfld3dallhess
@@ -1513,7 +1514,8 @@ c
         enddo
         endif
 c
-        if( ifpottarg .eq. 1 .or. iffldtarg .eq. 1 ) then
+        if( ifpottarg .eq. 1 .or. iffldtarg .eq. 1
+     $     .or. ifhesstarg .eq. 1 ) then
         do j=box1(16),box1(16)+box1(17)-1
         if (ifcharge .eq. 1 ) then
         call lpotfld3dallhess
@@ -1686,7 +1688,7 @@ c
         endif
         enddo
 c
-        if( ifpot .eq. 1 .or. iffld .eq. 1 ) then
+        if( ifpot .eq. 1 .or. iffld .eq. 1 .or. ifhess .eq. 1 ) then
 C$OMP PARALLEL DO DEFAULT(SHARED)
 C$OMP$PRIVATE(i,j,ptemp,ftemp,htemp) 
         do 6160 j=1,nsource
@@ -1753,7 +1755,8 @@ C$OMP$PRIVATE(i,j,ptemp,ftemp,htemp)
 C$OMP END PARALLEL DO
         endif
 
-        if( ifpottarg .eq. 1 .or. iffldtarg .eq. 1 ) then
+        if( ifpottarg .eq. 1 .or. iffldtarg .eq. 1
+     $     .or. ifhesstarg .eq. 1 ) then
 C$OMP PARALLEL DO DEFAULT(SHARED)
 C$OMP$PRIVATE(i,j,ptemp,ftemp,htemp) 
         do j=1,ntarget
@@ -1926,7 +1929,7 @@ c
         endif
         enddo
 c
-        if( ifpot .eq. 1 .or. iffld .eq. 1 ) then
+        if( ifpot .eq. 1 .or. iffld .eq. 1 .or. ifhess .eq. 1 ) then
 C$OMP PARALLEL DO DEFAULT(SHARED)
 C$OMP$PRIVATE(i,j,ptemp,ftemp,htemp) 
         do 6160 j=1,ms
@@ -1993,7 +1996,8 @@ C$OMP$PRIVATE(i,j,ptemp,ftemp,htemp)
 C$OMP END PARALLEL DO
         endif
 
-        if( ifpottarg .eq. 1 .or. iffldtarg .eq. 1 ) then
+        if( ifpottarg .eq. 1 .or. iffldtarg .eq. 1
+     $     .or. ifhesstarg .eq. 1 ) then
 C$OMP PARALLEL DO DEFAULT(SHARED)
 C$OMP$PRIVATE(i,j,ptemp,ftemp,htemp) 
         do j=1,mt

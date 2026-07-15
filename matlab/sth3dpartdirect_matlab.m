@@ -140,6 +140,7 @@ end
 ier=0;
 
 if_use_fmm = 0;
+iprec = 4;  % FMM precision flag, used only when if_use_fmm=1
 
 %
 %  Direct arrival
@@ -306,8 +307,6 @@ end
 end
 
 
-if( 2 == 2 ),
-% to do
 if( ifgrad == 1 ),
 
 s = (ntarget+1) : (ntarget+nsource);
@@ -357,8 +356,6 @@ if( itype == 1 ),
 U.gradtarg = U_direct.gradtarg - U_image.gradtarg(:,:,t) - F.gradtarg;
 else
 U.gradtarg = - U_image.gradtarg(:,:,t) - F.gradtarg;
-end
-
 end
 
 end

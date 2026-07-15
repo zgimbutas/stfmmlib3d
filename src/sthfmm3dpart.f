@@ -116,7 +116,7 @@ c
         real *8 source(3,nparts)
         real *8 sigma_sl(3,nparts)
         real *8 sigma_dl(3,nparts),sigma_dv(3,nparts)
-        real *8 pot(3,nparts),pre(nparts),train(3,3,nparts)
+        real *8 pot(3,nparts),pre(nparts),grad(3,3,nparts)
         integer nparts,ntargs
 
         ntargs=0
@@ -503,7 +503,7 @@ c
 
         endif
 
-        if( ifdouble .eq. 2 .or. ifdouble .eq. 3 
+        if( ifdouble .eq. 3
      $     .or. ifdouble .eq. 4 ) then
 
         ifdipole = 1
@@ -1010,7 +1010,7 @@ c
 
         endif
 
-        if( ifdouble .eq. 2 .or. ifdouble .eq. 3 
+        if( ifdouble .eq. 3
      $     .or. ifdouble .eq. 4 ) then
 
         ifdipole = 1
@@ -1517,7 +1517,7 @@ c
 
         endif
 
-        if( ifdouble .eq. 2 .or. ifdouble .eq. 3 
+        if( ifdouble .eq. 3
      $     .or. ifdouble .eq. 4 ) then
 
         ifdipole = 1

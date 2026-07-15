@@ -154,7 +154,7 @@ c
 c     OUTPUT:
 c
 c     pot(3,nparts) = velocity at source locations
-c     pre(3,nparts) = pressure at source locations
+c     pre(nparts) = pressure at source locations
 c     grad(3,3,nparts) = gradient at source locations
 c
 c     The main FMM routine permits both evaluation on surface
@@ -227,10 +227,10 @@ c
 c     OUTPUT:
 c
 c     pot(3,nparts) = velocity at source locations
-c     pre(3,nparts) = pressure at source locations
+c     pre(nparts) = pressure at source locations
 c     grad(3,3,nparts) = gradient at source locations
 c     pottarg(3,ntargs) = velocity at target locations
-c     pretarg(3,ntargs) = pressure at target locations
+c     pretarg(ntargs) = pressure at target locations
 c     gradtarg(3,3,ntargs) = gradient at target locations
 c
 c
@@ -379,10 +379,10 @@ c
 c     OUTPUT:
 c
 c     pot(3,nparts) = velocity at source locations
-c     pre(3,nparts) = pressure at source locations
+c     pre(nparts) = pressure at source locations
 c     grad(3,3,nparts) = gradient at source locations
 c     pottarg(3,ntargs) = velocity at target locations
-c     pretarg(3,ntargs) = pressure at target locations
+c     pretarg(ntargs) = pressure at target locations
 c     gradtarg(3,3,ntargs) = gradient at target locations
 c
 c
@@ -723,10 +723,10 @@ c
 c     OUTPUT:
 c
 c     pot(3,nparts) = velocity at source locations
-c     pre(3,nparts) = pressure at source locations
+c     pre(nparts) = pressure at source locations
 c     grad(3,3,nparts) = gradient at source locations
 c     pottarg(3,ntargs) = velocity at target locations
-c     pretarg(3,ntargs) = pressure at target locations
+c     pretarg(ntargs) = pressure at target locations
 c     gradtarg(3,3,ntargs) = gradient at target locations
 c
         implicit real *8 (a-h,o-z)
@@ -1639,10 +1639,10 @@ c
 c       OUTPUT:
 c
 c       pot(3,nsource) - velocity at source locations
-c       pre(3,nsource) - pressure at source locations
+c       pre(nsource) - pressure at source locations
 c       grad(3,3,nsource) - gradient at source locations
 c       pottarg(3,ntarget) - velocity at target locations
-c       pretarg(3,ntarget) - pressure at target locations
+c       pretarg(ntarget) - pressure at target locations
 c       gradtarg(3,3,ntarget) - gradient at target locations
 c
 c

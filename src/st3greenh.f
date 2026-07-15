@@ -462,8 +462,10 @@ c**********************************************************************C
         implicit real *8 (a-h,o-z)
 c
 c
-c       Stokes DLP with zero boundary condition on lower half-space,
+c       Stokes DLP, stresslet (type 1),
+c       with zero boundary condition on lower half-space,
 c       check calls to free space Stokes and Laplace kernels.
+c       Same as green3stph_brute1.
 c
 c       Half-space boundary condition is assumed,
 c       u = 0 at z=0.
@@ -588,12 +590,18 @@ c
 c
 c       Stokes DLP with zero boundary condition on lower half-space,
 c       check calls to free space Stokes and Laplace kernels.
+c       Dispatcher over the double layer kernel types:
+c       ifdouble = 1: stresslet (green3stph_brute1)
+c       ifdouble = 2: symmetric stresslet (green3stph_brute2)
+c       ifdouble = 3: rotlet (green3stph_brute3)
+c       ifdouble = 4: doublet (green3stph_brute4)
 c
 c       Half-space boundary condition is assumed,
 c       u = 0 at z=0.
 c
 c       INPUT:
 c
+c       ifdouble        Double layer kernel type, see above.
 c       source(3)       Source location in lower half-space (z<0).
 c       target(3)       Target point in lower half-space (z<0).
 c       du(3)           Strength of double force source
@@ -644,7 +652,8 @@ c**********************************************************************C
         implicit real *8 (a-h,o-z)
 c
 c
-c       Stokes DLP with zero boundary condition on lower half-space,
+c       Stokes DLP, stresslet (type 1),
+c       with zero boundary condition on lower half-space,
 c       check calls to free space Stokes and Laplace kernels.
 c
 c       Half-space boundary condition is assumed,
@@ -767,8 +776,12 @@ c**********************************************************************C
         implicit real *8 (a-h,o-z)
 c
 c
-c       Stokes DLP with zero boundary condition on lower half-space,
+c       Stokes DLP, symmetric stresslet (type 2),
+c       with zero boundary condition on lower half-space,
 c       check calls to free space Stokes and Laplace kernels.
+c       The image system is quadrupole only: the Papkovich-Neuber
+c       dipole corrections of type 1 and of the potential source
+c       [-r_i/r^3](n.g) cancel exactly.
 c
 c       Half-space boundary condition is assumed,
 c       u = 0 at z=0.
@@ -799,7 +812,7 @@ c
         xyz(1)=target(1)-source(1)
         xyz(2)=target(2)-source(2)
         xyz(3)=target(3)-source(3)
-        call green3stp_stresslet_dlp(xyz,du,rnorm,uout,pout)
+        call green3stp_stresslet_sym(xyz,du,rnorm,uout,pout)
 ccc        if (2.ne.3) return
 c
 c
@@ -816,7 +829,7 @@ c
         rnorm_image(1)=+rnorm(1)
         rnorm_image(2)=+rnorm(2)
         rnorm_image(3)=-rnorm(3)
-        call green3stp_stresslet_dlp(xyz,du_image,rnorm_image,fvec,pvec)
+        call green3stp_stresslet_sym(xyz,du_image,rnorm_image,fvec,pvec)
 c
         uout(1) = uout(1) - fvec(1)
         uout(2) = uout(2) - fvec(2)
@@ -871,7 +884,8 @@ c**********************************************************************C
         implicit real *8 (a-h,o-z)
 c
 c
-c       Stokes DLP with zero boundary condition on lower half-space,
+c       Stokes DLP, rotlet (type 3),
+c       with zero boundary condition on lower half-space,
 c       check calls to free space Stokes and Laplace kernels.
 c
 c       Half-space boundary condition is assumed,
@@ -975,8 +989,11 @@ c**********************************************************************C
         implicit real *8 (a-h,o-z)
 c
 c
-c       Stokes DLP with zero boundary condition on lower half-space,
+c       Stokes DLP, doublet (type 4),
+c       with zero boundary condition on lower half-space,
 c       check calls to free space Stokes and Laplace kernels.
+c       Doublet = symmetric stresslet + rotlet, so this field
+c       must equal green3stph_brute2 + green3stph_brute3.
 c
 c       Half-space boundary condition is assumed,
 c       u = 0 at z=0.

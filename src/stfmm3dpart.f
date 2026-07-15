@@ -102,7 +102,7 @@ c
         real *8 source(3,nparts)
         real *8 sigma_sl(3,nparts)
         real *8 sigma_dl(3,nparts),sigma_dv(3,nparts)
-        real *8 pot(3,nparts),pre(nparts),train(3,3,nparts)
+        real *8 pot(3,nparts),pre(nparts),grad(3,3,nparts)
         integer nparts,ntargs
 
         ntargs=0
@@ -324,10 +324,10 @@ c
         if( ifgrad .eq. 1 ) then
         do i=1,3
         do j=1,3
-        hessmatr(i,j,k) = 0.0d0
+        grad(i,j,k) = 0.0d0
         enddo
         enddo
-        endif        
+        endif
 c
         enddo
 c
@@ -344,7 +344,7 @@ c
         if( ifgradtarg .eq. 1 ) then
         do i=1,3
         do j=1,3
-        hessmatrtarg(i,j,k) = 0.0d0
+        gradtarg(i,j,k) = 0.0d0
         enddo
         enddo
         endif
