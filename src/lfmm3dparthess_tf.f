@@ -810,8 +810,9 @@ c
 
             call lfmm3dparthess_direct(box,box1,sourcesort,
      $         ifcharge,chargesort,ifdipole,dipstrsort,dipvecsort,
-     $         ifpot,pot,iffld,fld,
-     $         targetsort,ifpottarg,pottarg,iffldtarg,fldtarg)
+     $         ifpot,pot,iffld,fld,ifhess,hess,
+     $         targetsort,ifpottarg,pottarg,iffldtarg,fldtarg,
+     $         ifhesstarg,hesstarg)
 
             endif
          enddo
