@@ -13,6 +13,7 @@ c
         dimension umatr1(3,3),umatr2(3,3,3),uout(3)
         dimension pmatr1(3),pmatr2(3,3)
         dimension strain(3,3),stress(3,3)
+        dimension dudx(3,3)
 c
 c       SET ALL PARAMETERS
 c
@@ -190,9 +191,59 @@ c
         call test3(umatr1,umatr2,pmatr1,uout,pout)
 c
 c       ... this should be approximately zero
-c       
+c
         call prin2('and the value of Stokes operator,lap=*',uout,3)
         call prin2('and the value of Stokes operator,div=*',pout,1)
+c
+c
+c       ... check the arbitrary double layer kernels, ifdouble = 1,2,3,4
+c
+        do 4000 ifdouble = 1,4
+        call prinf('ifdouble=*',ifdouble,1)
+
+        call green3stp_arb_eval
+     $     (ifdouble,source,du,rnorm,target,uvec,p,1,dudx)
+        call prin2('uvec (T)=*',uvec,3)
+        call prin2('p (T)=*',p,1)
+c
+        call prinf('check the second fundamental solution T*',i,0)
+c
+c       ... check the second fundamental solution T
+c
+c       ... first derivatives of velocity
+c
+        call test1ta(ifdouble,source,target,du,rnorm,umatr1,pmatr1)
+        call prin2('umatr1=*',umatr1,3*3)
+        call prin2('pmatr1=*',pmatr1,3)
+c
+c       ... compare the analytic gradient with numerical differentiation
+c
+c       ... this should be approximately zero
+c
+        do i=1,3
+        do j=1,3
+        strain(i,j)=dudx(i,j)-umatr1(i,j)
+        enddo
+        enddo
+        call prin2('dudx=*',dudx,3*3)
+        call prin2('dudx-umatr1=*',strain,3*3)
+c
+c       ... second derivatives of velocity
+c
+        call test2ta(ifdouble,source,target,du,rnorm,umatr2,pmatr2)
+        call prin2('umatr2=*',umatr2,3*3*3)
+        call prin2('pmatr2=*',pmatr2,3*3)
+c
+c       ... check Stokes equations numerically
+c
+        call test3(umatr1,umatr2,pmatr1,uout,pout)
+c
+c       ... this should be approximately zero
+c
+        call prin2('and the value of Stokes operator,lap=*',uout,3)
+        call prin2('and the value of Stokes operator,div=*',pout,1)
+c
+ 4000   continue
 c
 ccc     stop
 c
@@ -902,3 +953,144 @@ c
 c
 c
 c
+        subroutine test1ta
+     $     (ifdouble,source,target,du,rnorm,umatr,pmatr)
+        implicit real *8 (a-h,o-z)
+        dimension du(3),rnorm(3),source(3),target(3)
+        dimension xyz1(3),xyz2(3),fvec1(3),fvec2(3)
+        dimension umatr(3,3),pmatr(3),dgrad(3,3)
+c
+c       ... first derivative of free-space DLP (numerical approximation)
+c
+        h=1.0e-5
+ccc        h=1.0e-10
+c
+        xyz1(1)=target(1)+h
+        xyz1(2)=target(2)
+        xyz1(3)=target(3)
+c
+        xyz2(1)=target(1)-h
+        xyz2(2)=target(2)
+        xyz2(3)=target(3)
+c
+        call green3stp_arb_eval
+     $     (ifdouble,source,du,rnorm,xyz1,fvec1,q1,0,dgrad)
+        call green3stp_arb_eval
+     $     (ifdouble,source,du,rnorm,xyz2,fvec2,q2,0,dgrad)
+c
+        umatr(1,1)=(fvec1(1)-fvec2(1))/(2*h)
+        umatr(2,1)=(fvec1(2)-fvec2(2))/(2*h)
+        umatr(3,1)=(fvec1(3)-fvec2(3))/(2*h)
+        pmatr(1) = (q1-q2)/(2*h)
+c
+        xyz1(1)=target(1)
+        xyz1(2)=target(2)+h
+        xyz1(3)=target(3)
+c
+        xyz2(1)=target(1)
+        xyz2(2)=target(2)-h
+        xyz2(3)=target(3)
+c
+        call green3stp_arb_eval
+     $     (ifdouble,source,du,rnorm,xyz1,fvec1,q1,0,dgrad)
+        call green3stp_arb_eval
+     $     (ifdouble,source,du,rnorm,xyz2,fvec2,q2,0,dgrad)
+c
+        umatr(1,2)=(fvec1(1)-fvec2(1))/(2*h)
+        umatr(2,2)=(fvec1(2)-fvec2(2))/(2*h)
+        umatr(3,2)=(fvec1(3)-fvec2(3))/(2*h)
+        pmatr(2) = (q1-q2)/(2*h)
+c
+        xyz1(1)=target(1)
+        xyz1(2)=target(2)
+        xyz1(3)=target(3)+h
+c
+        xyz2(1)=target(1)
+        xyz2(2)=target(2)
+        xyz2(3)=target(3)-h
+c
+        call green3stp_arb_eval
+     $     (ifdouble,source,du,rnorm,xyz1,fvec1,q1,0,dgrad)
+        call green3stp_arb_eval
+     $     (ifdouble,source,du,rnorm,xyz2,fvec2,q2,0,dgrad)
+c
+        umatr(1,3)=(fvec1(1)-fvec2(1))/(2*h)
+        umatr(2,3)=(fvec1(2)-fvec2(2))/(2*h)
+        umatr(3,3)=(fvec1(3)-fvec2(3))/(2*h)
+        pmatr(3) = (q1-q2)/(2*h)
+c
+        return
+        end
+c
+c
+c
+        subroutine test2ta
+     $     (ifdouble,source,target,du,rnorm,umatr,pmatr)
+        implicit real *8 (a-h,o-z)
+        dimension du(3),rnorm(3),xyz(3)
+        dimension source(3),target(3)
+        dimension xyz1(3),xyz2(3)
+        dimension fvec1(3,3),fvec2(3,3),pvec1(3),pvec2(3)
+        dimension umatr(3,3,3),pmatr(3,3)
+c
+c       ... second derivative of free-space DLP (numerical approximation)
+c
+        h=1.0e-5
+ccc        h=1.0e-10
+c
+        xyz1(1)=target(1)+h
+        xyz1(2)=target(2)
+        xyz1(3)=target(3)
+c
+        xyz2(1)=target(1)-h
+        xyz2(2)=target(2)
+        xyz2(3)=target(3)
+c
+        call test1ta(ifdouble,source,xyz1,du,rnorm,fvec1,pvec1)
+        call test1ta(ifdouble,source,xyz2,du,rnorm,fvec2,pvec2)
+c
+        do i=1,3
+        do j=1,3
+        umatr(i,j,1)=(fvec1(i,j)-fvec2(i,j))/(2*h)
+        enddo
+        pmatr(i,1)=(pvec1(i)-pvec2(i))/(2*h)
+        enddo
+c
+        xyz1(1)=target(1)
+        xyz1(2)=target(2)+h
+        xyz1(3)=target(3)
+c
+        xyz2(1)=target(1)
+        xyz2(2)=target(2)-h
+        xyz2(3)=target(3)
+c
+        call test1ta(ifdouble,source,xyz1,du,rnorm,fvec1,pvec1)
+        call test1ta(ifdouble,source,xyz2,du,rnorm,fvec2,pvec2)
+c
+        do i=1,3
+        do j=1,3
+        umatr(i,j,2)=(fvec1(i,j)-fvec2(i,j))/(2*h)
+        enddo
+        pmatr(i,2)=(pvec1(i)-pvec2(i))/(2*h)
+        enddo
+c
+        xyz1(1)=target(1)
+        xyz1(2)=target(2)
+        xyz1(3)=target(3)+h
+c
+        xyz2(1)=target(1)
+        xyz2(2)=target(2)
+        xyz2(3)=target(3)-h
+c
+        call test1ta(ifdouble,source,xyz1,du,rnorm,fvec1,pvec1)
+        call test1ta(ifdouble,source,xyz2,du,rnorm,fvec2,pvec2)
+c
+        do i=1,3
+        do j=1,3
+        umatr(i,j,3)=(fvec1(i,j)-fvec2(i,j))/(2*h)
+        enddo
+        pmatr(i,3)=(pvec1(i)-pvec2(i))/(2*h)
+        enddo
+c
+        return
+        end
