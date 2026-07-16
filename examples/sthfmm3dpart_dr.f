@@ -248,7 +248,7 @@ c
 c       turn on single and/or double layer potential
 c
         ifsingle=1
-        ifdouble=2
+        ifdouble=1
 c
 c       set whether displacement and/or gradient to be compute on surface
 c       and at target locations.
