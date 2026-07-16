@@ -1,4 +1,4 @@
-cc Copyright (C) 2009-2012: Leslie Greengard and Zydrunas Gimbutas
+cc Copyright (C) 2009-2026: Leslie Greengard and Zydrunas Gimbutas
 cc Contact: greengard@cims.nyu.edu
 cc 
 cc This program is free software; you can redistribute it and/or modify 
@@ -11,11 +11,6 @@ cc PARTICULAR PURPOSE.  See the GNU General Public License for more
 cc details. You should have received a copy of the GNU General Public 
 cc License along with this program; 
 cc if not, see <http://www.gnu.org/licenses/>.
-ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-c
-c    $Date: 2012-04-10 19:48:49 -0400 (Tue, 10 Apr 2012) $
-c    $Revision: 2891 $
-c
 ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c       Direct calculation of half-space Stokes Green's functions in R^3,

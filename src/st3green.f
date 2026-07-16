@@ -1,4 +1,4 @@
-cc Copyright (C) 2009-2012: Leslie Greengard and Zydrunas Gimbutas
+cc Copyright (C) 2009-2026: Leslie Greengard and Zydrunas Gimbutas
 cc Contact: greengard@cims.nyu.edu
 cc 
 cc This program is free software; you can redistribute it and/or modify 
@@ -11,11 +11,6 @@ cc PARTICULAR PURPOSE.  See the GNU General Public License for more
 cc details. You should have received a copy of the GNU General Public 
 cc License along with this program; 
 cc if not, see <http://www.gnu.org/licenses/>.
-ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-c
-c    $Date: 2012-03-31 11:17:40 -0400 (Sat, 31 Mar 2012) $
-c    $Revision: 2875 $
-c
 ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c       Direct calculation of various (free space) Stokes
