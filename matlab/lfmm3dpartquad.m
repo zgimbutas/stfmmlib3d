@@ -162,10 +162,10 @@ if( ifhesstarg == 1 ), hesstarg=zeros(6,ntarget)+1i*zeros(6,ntarget); end;
 ier=0;
 
 if( ntarget == 0 ) 
-mex_id_ = 'lfmm3dpartquadself(io int[x], i int[x], i int[x], i double[xx], i int[x], i dcomplex[], i int[x], i dcomplex[], i double[xx], i int[x], i dcomplex[], i double[xx], i int[x], io dcomplex[], i int[x], io dcomplex[], i int[x], io dcomplex[])';
+mex_id_ = 'lfmm3dpartquadself(c io int[x], c i int[x], c i int[x], c i double[xx], c i int[x], c i dcomplex[], c i int[x], c i dcomplex[], c i double[xx], c i int[x], c i dcomplex[], c i double[xx], c i int[x], c io dcomplex[], c i int[x], c io dcomplex[], c i int[x], c io dcomplex[])';
 [ier, pot, fld, hess] = stfmm3d_r2012b(mex_id_, ier, iprec, nsource, source, ifcharge, charge, ifdipole, dipstr, dipvec, ifquad, quadstr, quadvec, ifpot, pot, iffld, fld, ifhess, hess, 1, 1, 1, 3, nsource, 1, 1, 3, nsource, 1, 6, nsource, 1, 1, 1);
 else
-mex_id_ = 'lfmm3dpartquadtarg(io int[x], i int[x], i int[x], i double[xx], i int[x], i dcomplex[], i int[x], i dcomplex[], i double[xx], i int[x], i dcomplex[], i double[xx], i int[x], io dcomplex[], i int[x], io dcomplex[], i int[x], io dcomplex[], i int[x], i double[], i int[x], io dcomplex[], i int[x], io dcomplex[], i int[x], io dcomplex[])';
+mex_id_ = 'lfmm3dpartquadtarg(c io int[x], c i int[x], c i int[x], c i double[xx], c i int[x], c i dcomplex[], c i int[x], c i dcomplex[], c i double[xx], c i int[x], c i dcomplex[], c i double[xx], c i int[x], c io dcomplex[], c i int[x], c io dcomplex[], c i int[x], c io dcomplex[], c i int[x], c i double[], c i int[x], c io dcomplex[], c i int[x], c io dcomplex[], c i int[x], c io dcomplex[])';
 [ier, pot, fld, hess, pottarg, fldtarg, hesstarg] = stfmm3d_r2012b(mex_id_, ier, iprec, nsource, source, ifcharge, charge, ifdipole, dipstr, dipvec, ifquad, quadstr, quadvec, ifpot, pot, iffld, fld, ifhess, hess, ntarget, target, ifpottarg, pottarg, iffldtarg, fldtarg, ifhesstarg, hesstarg, 1, 1, 1, 3, nsource, 1, 1, 3, nsource, 1, 6, nsource, 1, 1, 1, 1, 1, 1, 1);
 end
 

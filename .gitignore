@@ -3,3 +3,4 @@
 fort.*
 octave-core
 int2
+*.mex*

@@ -141,7 +141,7 @@ end
 ier=0;
 
 
-mex_id_ = 'sth3dpartdirect(i int[x], i int[x], i double[xx], i int[x], i double[], i int[x], i double[], i double[xx], i int[x], io double[], io double[], i int[x], io double[], i int[x], i double[], i int[x], io double[], io double[], i int[x], io double[])';
+mex_id_ = 'sth3dpartdirect(c i int[x], c i int[x], c i double[xx], c i int[x], c i double[], c i int[x], c i double[], c i double[xx], c i int[x], c io double[], c io double[], c i int[x], c io double[], c i int[x], c i double[], c i int[x], c io double[], c io double[], c i int[x], c io double[])';
 [pot, pre, grad, pottarg, pretarg, gradtarg] = stfmm3d_r2012b(mex_id_, itype, nsource, source, ifsingle, sigma_sl, ifdouble, sigma_dl, sigma_dv, ifpot, pot, pre, ifgrad, grad, ntarget, target, ifpottarg, pottarg, pretarg, ifgradtarg, gradtarg, 1, 1, 3, nsource, 1, 1, 3, nsource, 1, 1, 1, 1, 1);
 
 

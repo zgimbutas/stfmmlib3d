@@ -147,10 +147,10 @@ end
 ier=0;
 
 if( ntarget == 0 ) 
-mex_id_ = 'stfmm3dpartself(io int[x], i int[x], i int[x], i double[xx], i int[x], i double[], i int[x], i double[], i double[xx], i int[x], io double[], io double[], i int[x], io double[])';
+mex_id_ = 'stfmm3dpartself(c io int[x], c i int[x], c i int[x], c i double[xx], c i int[x], c i double[], c i int[x], c i double[], c i double[xx], c i int[x], c io double[], c io double[], c i int[x], c io double[])';
 [ier, pot, pre, grad] = stfmm3d_r2012b(mex_id_, ier, iprec, nsource, source, ifsingle, sigma_sl, ifdouble, sigma_dl, sigma_dv, ifpot, pot, pre, ifgrad, grad, 1, 1, 1, 3, nsource, 1, 1, 3, nsource, 1, 1);
 else
-mex_id_ = 'stfmm3dparttarg(io int[x], i int[x], i int[x], i double[xx], i int[x], i double[], i int[x], i double[], i double[xx], i int[x], io double[], io double[], i int[x], io double[], i int[x], i double[], i int[x], io double[], io double[], i int[x], io double[])';
+mex_id_ = 'stfmm3dparttarg(c io int[x], c i int[x], c i int[x], c i double[xx], c i int[x], c i double[], c i int[x], c i double[], c i double[xx], c i int[x], c io double[], c io double[], c i int[x], c io double[], c i int[x], c i double[], c i int[x], c io double[], c io double[], c i int[x], c io double[])';
 [ier, pot, pre, grad, pottarg, pretarg, gradtarg] = stfmm3d_r2012b(mex_id_, ier, iprec, nsource, source, ifsingle, sigma_sl, ifdouble, sigma_dl, sigma_dv, ifpot, pot, pre, ifgrad, grad, ntarget, target, ifpottarg, pottarg, pretarg, ifgradtarg, gradtarg, 1, 1, 1, 3, nsource, 1, 1, 3, nsource, 1, 1, 1, 1, 1);
 end
 

@@ -1,8 +1,6 @@
 #
 #  Generate Matlab/Octave MEX files
 #
-#  gfortran > 4.4.0 is strongly recommended
-#
 
 PROJECT = stfmm3d_r2012b
 MEX_GATEWAY = $(PROJECT)
@@ -10,16 +8,26 @@ MEX_GATEWAY = $(PROJECT)
 
 ###TARGET=octave-linux
 TARGET=octave-linux-openmp
+
+###TARGET=octave-linux-intel
+###TARGET=octave-linux-intel-openmp
+
 ###TARGET=matlab-linux-a64
 ###TARGET=matlab-linux-a64-openmp
+
 ###TARGET=matlab-maci
 ###TARGET=matlab-maci-openmp
+###TARGET=matlab-maci64
+###TARGET=matlab-maci64-openmp
+
 ###TARGET=matlab-windows-w32
 ###TARGET=matlab-windows-w32-openmp
 ###TARGET=matlab-windows-w64
 ###TARGET=matlab-windows-w64-openmp
 
 include mwrap.inc
+
+MEX += -DMWF77_UNDERSCORE1
 
 
 .f.$(OBJSUF):
