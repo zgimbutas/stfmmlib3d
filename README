@@ -1,6 +1,6 @@
 
 This is the first public release of the Stokes library in R^3.
-Date: July 17, 2026
+Date: August 10, 2026
 
 Version 1.2 - First external release.
 =====================================
@@ -9,6 +9,9 @@ Version 1.2.1 - Add triangle FMM routines.
 ==========================================
 
 Version 1.2.2 - Bug fixes, updated Matlab/Octave MEX build.
+============================================================
+
+Version 1.2.3 - Extended test drivers, mwrap 1.3.5 MEX gateway, bug fixes.
 ============================================================
 
 
