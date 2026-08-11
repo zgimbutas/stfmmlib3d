@@ -40,7 +40,7 @@ TESTC99COMPLEX=test_c99_complex
 FC=    gfortran
 CC=    gcc
 CXX=   g++
-MEX=   FFLAGS="-03 -std=legacy -fPIC" mkoctfile --mex
+MEX=   FFLAGS="-O3 -std=legacy -fPIC" mkoctfile --mex
 MEX_FC=   $(FC)
 MEX_CC=   $(CXX)
 MW=mwrap
@@ -92,7 +92,7 @@ TESTC99COMPLEX=test_c99_complex
 FC=    gfortran
 CC=    gcc
 CXX=   g++
-MEX=   FFLAGS="-03 -std=legacy -fPIC -finteger-4-integer-8" mkoctfile --mex
+MEX=   FFLAGS="-O3 -std=legacy -fPIC -finteger-4-integer-8" mkoctfile --mex
 MEX_FC=   $(FC)
 MEX_CC=   $(CXX)
 MW=mwrap
@@ -152,7 +152,7 @@ TESTC99COMPLEX=test_c99_complex
 FC=    gfortran
 CC=    gcc
 CXX=   g++
-MEX=   FFLAGS="-03 -std=legacy -fPIC" mkoctfile --mex
+MEX=   FFLAGS="-O3 -std=legacy -fPIC" mkoctfile --mex
 MEX_FC=   $(FC)
 MEX_CC=   $(CXX)
 MW=mwrap
@@ -204,7 +204,7 @@ TESTC99COMPLEX=test_c99_complex
 FC=    gfortran
 CC=    gcc
 CXX=   g++
-MEX=   FFLAGS="-03 -std=legacy -fPIC -finteger-4-integer-8" mkoctfile --mex
+MEX=   FFLAGS="-O3 -std=legacy -fPIC -finteger-4-integer-8" mkoctfile --mex
 MEX_FC=   $(FC)
 MEX_CC=   $(CXX)
 MW=mwrap
