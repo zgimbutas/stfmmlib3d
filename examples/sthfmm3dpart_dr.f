@@ -4,10 +4,8 @@ c       using the half-space Stokes Green's functions, with the no-slip
 c       (zero-velocity) boundary condition u = 0 at z=0.
 c
         implicit real *8 (a-h,o-z)
-        parameter (lw=120 000 000)
-        dimension w(lw)
 c
-        call sthfmm3d_test(w,lw)
+        call sthfmm3d_test()
 c
         stop
         end
@@ -16,7 +14,7 @@ c
 c
 c
 c
-        subroutine sthfmm3d_test(w,lw)
+        subroutine sthfmm3d_test()
         implicit real *8 (a-h,o-z)
 c
 c       Compute potentials by direct calculation and via FMM.
@@ -30,8 +28,6 @@ c
 c
         dimension source(3,nmax)
         dimension target(3,nmax)
-c
-        dimension w(lw),xyz(3)
 c
         dimension pot(3,nmax),grad(3,3,nmax)
         dimension pottarg(3,nmax),gradtarg(3,3,nmax)
@@ -55,6 +51,9 @@ c
 c
 c
         call prinf('nsource=*',nsource,1)
+c
+        done=1
+        pi=4*atan(done)
 c
         idist=3
 c
@@ -89,24 +88,9 @@ c
         if( idist .eq. 3 ) then
 c
 c       ... construct randomly located charge distribution on a unit sphere
-c 
-        done=1
-        pi=4*atan(done)
 c
         d=hkrand(0)
         do i=1,nsource
-c
-c        source(1,i)=hkrand(0)
-c        source(2,i)=hkrand(0)
-c        source(3,i)=hkrand(0)
-c        source(1,i)=source(1,i)-0.5
-c        source(2,i)=source(2,i)-0.5
-c        source(3,i)=source(3,i)-0.5
-c        rr=source(1,i)**2+source(2,i)**2+source(3,i)**2
-c        rr=sqrt(rr)
-c        source(1,i)=source(1,i)/rr
-c        source(2,i)=source(2,i)/rr
-c        source(3,i)=source(3,i)/rr
 c
         theta=hkrand(0)*pi
         phi=hkrand(0)*2*pi
@@ -153,9 +137,9 @@ c        source(3,i)=source(3,i)*10
 c        enddo
 
 
+c       ... shift the sources below the wall z=0
+c
         do i=1,nsource
-        source(1,i)=source(1,i)
-        source(2,i)=source(2,i)
         source(3,i)=source(3,i) - 3
         enddo
 
@@ -244,11 +228,10 @@ c
         enddo        
 c
 c
-c       
+c
 c       turn on single and/or double layer potential
 c
         ifsingle=1
-        ifdouble=1
 c
 c       set whether displacement and/or gradient to be compute on surface
 c       and at target locations.
@@ -259,6 +242,14 @@ c
         ifgradtarg=1
 c
         ifprint=0
+c
+c       ... test all double layer kernel types against the independent
+c       half-space Green's function evaluators:
+c       ifdouble = 1 stresslet, 2 symmetric stresslet, 3 rotlet, 4 doublet
+c
+        do 9000 ifdouble = 1,4
+c
+        call prinf('ifdouble=*',ifdouble,1)
 c
 c       ... evaluate via FMM
 c
@@ -407,9 +398,6 @@ ccc        call prin2('absolute error in grad=*',a,1)
 c
 c
 
-        if( ifpottarg .eq. 0 .and. ifgradtarg .eq. 0 ) return
-
-
 c       since we are testing by direct calculation, only compute
 c       direct calculation at m targets.
 c
@@ -536,6 +524,7 @@ c
         call prin2('max wall velocity, should be zero=*',d,1)
         endif
 c
+ 9000   continue
 c
         return
         end
