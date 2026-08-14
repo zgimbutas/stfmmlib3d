@@ -491,7 +491,11 @@ FORTRAN_LIBRARY_PATH=$(dir $(shell gfortran --print-file-name libgfortran.dylib)
 # compatibility symbols gfortran needs). Homebrew libgomp - dynamic OR
 # static - SIGILLs in MATLAB's thread teardown on macOS ARM; one
 # OpenMP runtime per process, and it must be MATLAB's.
-MATLAB_OMP_DIR?=/Applications/MATLAB_R2024b.app/bin/maca64
+# MATLAB's libomp location is auto-detected as the newest
+# /Applications/MATLAB_*.app; override on nonstandard installs:
+#   make TARGET=... MATLAB_OMP_DIR=/path/to/MATLAB.app/bin/maca64
+MATLAB_APP?=$(lastword $(sort $(wildcard /Applications/MATLAB_*.app)))
+MATLAB_OMP_DIR?=$(MATLAB_APP)/bin/maca64
 MEX_LIBS=-L$(FORTRAN_LIBRARY_PATH) -L. -lgfortran -L$(MATLAB_OMP_DIR) -lomp -lm
 ###MEX_LIBS=-L$(FORTRAN_LIBRARY_PATH) -L. -lgfortran -lgomp -lm
 ###MEX_LIBS=-lgfortran -lgomp -lm
