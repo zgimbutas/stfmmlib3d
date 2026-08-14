@@ -439,7 +439,7 @@ endif
 
 ifeq ($(TARGET), matlab-maca64)
 
-FFLAGS=-g -O3 -std=legacy --openmp -fPIC
+FFLAGS=-g -O3 -std=legacy -fPIC
 
 # Use the following for Matlab + gfortran
 TESTC99COMPLEX=test_c99_complex
@@ -487,7 +487,13 @@ MEX_CC=   $(CXX)
 MW=mwrap
 MWFLAGS=-c99complex -mex        
 FORTRAN_LIBRARY_PATH=$(dir $(shell gfortran --print-file-name libgfortran.dylib))
-MEX_LIBS=-L$(FORTRAN_LIBRARY_PATH) -L. -lgfortran -lgomp -lm
+# Link MATLAB's own OpenMP runtime (LLVM libomp, exports the GOMP_*
+# compatibility symbols gfortran needs). Homebrew libgomp - dynamic OR
+# static - SIGILLs in MATLAB's thread teardown on macOS ARM; one
+# OpenMP runtime per process, and it must be MATLAB's.
+MATLAB_OMP_DIR?=/Applications/MATLAB_R2024b.app/bin/maca64
+MEX_LIBS=-L$(FORTRAN_LIBRARY_PATH) -L. -lgfortran -L$(MATLAB_OMP_DIR) -lomp -lm
+###MEX_LIBS=-L$(FORTRAN_LIBRARY_PATH) -L. -lgfortran -lgomp -lm
 ###MEX_LIBS=-lgfortran -lgomp -lm
 MEX_LINK=
 
