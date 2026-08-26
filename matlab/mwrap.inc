@@ -1,28 +1,108 @@
 #
-#  Generate Matlab/Octave MEX files
-#  Date: Mar 25, 2025
+#  mwrap.inc - compiler/linker settings for building Matlab/Octave MEX
+#  files from Fortran sources with mwrap.
 #
-
-
-###TARGET=octave-linux
-###TARGET=octave-linux-openmp
-
-###TARGET=matlab-linux-a64
-###TARGET=matlab-linux-a64-openmp
-
-###TARGET=octave-macos
-###TARGET=octave-macos-openmp
-
-###TARGET=matlab-maci64
-###TARGET=matlab-maci64-openmp
-
-###TARGET=matlab-maca64
-###TARGET=matlab-maca64-openmp
-
-###TARGET=matlab-windows-w64
-###TARGET=matlab-windows-w64-openmp
-
-
+#  Date: Aug 26, 2026
+#
+#
+#  Usage
+#  -----
+#
+#  This file is included by makefile.mwrap; it does nothing on its own.
+#  Select a configuration by setting TARGET, either on the command line
+#
+#      make TARGET=octave-linux-openmp -f makefile.mwrap -j8
+#
+#  or by uncommenting a TARGET= line in makefile.mwrap (see also the
+#  compile_*.sh wrapper scripts). Exactly one block below must match;
+#  an unknown TARGET leaves all variables empty and the build fails
+#  with an obscure "missing separator" / "command not found" error.
+#
+#
+#  Target naming
+#  -------------
+#
+#      <host>-<platform>[-ilp64][-intel][-cross][-openmp]
+#
+#  host      octave | matlab
+#  platform  linux | macos (Octave) | maci64 (Matlab, Intel Mac)
+#            | maca64 (Matlab, Apple Silicon) | windows | a64/w64 (Matlab
+#            Linux/Windows x86_64)
+#  ilp64     8-byte default INTEGER: gfortran -finteger-4-integer-8 and
+#            mwrap -i8. Use only when the Fortran library is built with
+#            8-byte integers (e.g. to link against ILP64 BLAS/LAPACK).
+#  intel     Intel Fortran (ief77) instead of gfortran; legacy, Linux only.
+#  cross     built on Linux with a MinGW-w64 cross compiler in
+#            $(HOME)/lib/cross_win64 (legacy). Without -cross the Windows
+#            targets use a native MinGW gfortran under MSYS2.
+#  openmp    compile and link with OpenMP.
+#
+#
+#  Available targets
+#  -----------------
+#
+#  Octave, gfortran (mkoctfile --mex)
+#      octave-linux                 octave-linux-openmp
+#      octave-linux-ilp64           octave-linux-ilp64-openmp
+#      octave-macos                 octave-macos-openmp
+#      octave-macos-ilp64           octave-macos-ilp64-openmp
+#      octave-windows               octave-windows-openmp
+#      octave-windows-ilp64         octave-windows-ilp64-openmp
+#
+#  Matlab, gfortran (mex)
+#      matlab-linux-a64             matlab-linux-a64-openmp
+#      matlab-linux-ilp64-a64       matlab-linux-ilp64-a64-openmp
+#      matlab-maci64                matlab-maci64-openmp
+#      matlab-maca64                matlab-maca64-openmp
+#      matlab-windows-w64           matlab-windows-w64-openmp
+#      matlab-windows-ilp64-w64     matlab-windows-ilp64-w64-openmp
+#      matlab-windows-w64-cross     matlab-windows-w64-cross-openmp
+#
+#  Intel compiler (legacy, unmaintained)
+#      octave-linux-intel           octave-linux-intel-openmp
+#      matlab-linux-a64-intel       matlab-linux-a64-intel-openmp
+#
+#
+#  Variables defined by every block
+#  --------------------------------
+#
+#  FC, CC, CXX        compilers used for the .f / .c object files
+#  FFLAGS             Fortran flags; always includes -std=legacy -fPIC
+#  MEX                command that links the gateway .c + objects into
+#                     the MEX file (mkoctfile --mex, mex, or a bare
+#                     compiler for Windows)
+#  MEX_FC, MEX_CC     compilers invoked by the makefile.mwrap suffix rules
+#  MEX_FLAGS          extra flags passed to MEX_FC / MEX_CC / MEX
+#  MEX_LIBS           libraries appended to the link line
+#  MEX_LINK           output-name flag (-output foo.mexa64, -o foo.mexw64)
+#  MW, MWFLAGS        mwrap binary and options (-c99complex -mex [-i8])
+#  OBJSUF, MODSUF     object / module file suffixes (o, mod)
+#  TESTC99COMPLEX     mwrap self-test name; kept for compatibility
+#
+#
+#  Notes
+#  -----
+#
+#  * All gfortran targets pass -std=legacy so that fixed-form F77 code
+#    with non-standard extensions compiles on gfortran >= 10.
+#
+#  * macOS: libgfortran is located at build time via
+#    "gfortran --print-file-name libgfortran.dylib" (FORTRAN_LIBRARY_PATH)
+#    and, for Octave, baked in with -rpath so the .mex loads without
+#    DYLD_LIBRARY_PATH.
+#
+#  * matlab-maca64-openmp links Matlab's own LLVM libomp instead of
+#    Homebrew libgomp (libgomp SIGILLs during Matlab's thread teardown on
+#    Apple Silicon). Matlab is auto-detected as the newest
+#    /Applications/MATLAB_*.app; override with
+#        make TARGET=matlab-maca64-openmp MATLAB_OMP_DIR=/path/to/MATLAB.app/bin/maca64
+#
+#  * Native Windows targets hard-code the Matlab R2023a include/lib paths
+#    (/C/Program Files/MATLAB/R2023a); edit CROSS_LIBS for other releases.
+#
+#  * Run OpenMP MEX files with OMP_NUM_THREADS set; on Linux/gfortran also
+#    export OMP_STACKSIZE=1024M if large automatic arrays segfault.
+#
 
 ##############################################################################
 #
@@ -372,7 +452,7 @@ endif
 
 ifeq ($(TARGET), matlab-maci64)
 
-FFLAGS=-g -O3 -std=legacy --openmp -fPIC
+FFLAGS=-g -O3 -std=legacy -fPIC
 
 # Use the following for Matlab + gfortran
 TESTC99COMPLEX=test_c99_complex
