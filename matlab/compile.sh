@@ -1,9 +1,7 @@
 
-make -f makefile.mwrap -j4 TARGET=matlab-windows-w32-openmp clean
-make -f makefile.mwrap -j4 TARGET=matlab-windows-w32-openmp  
 
-make -f makefile.mwrap -j4 TARGET=matlab-windows-w64-openmp clean
-make -f makefile.mwrap -j4 TARGET=matlab-windows-w64-openmp 
+make -f makefile.mwrap -j4 TARGET=matlab-windows-w64-cross-openmp clean
+make -f makefile.mwrap -j4 TARGET=matlab-windows-w64-cross-openmp 
 
 make -f makefile.mwrap -j4 TARGET=matlab-linux-a64-openmp clean
 make -f makefile.mwrap -j4 TARGET=matlab-linux-a64-openmp  
